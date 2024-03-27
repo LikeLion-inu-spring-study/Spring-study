@@ -20,7 +20,6 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-
     @GetMapping("/members/new")
     public String createForm(Model model) {
         model.addAttribute("memberForm", new MemberForm());
