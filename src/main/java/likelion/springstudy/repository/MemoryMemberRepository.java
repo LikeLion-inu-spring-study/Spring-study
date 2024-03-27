@@ -1,5 +1,6 @@
 package likelion.springstudy.repository;
 
+import likelion.springstudy.domain.Address;
 import likelion.springstudy.domain.Member;
 
 import java.util.*;
@@ -10,8 +11,8 @@ public class MemoryMemberRepository implements MemberRepository {
     private static long sequence = 0L;
 
     @Override
-    public Member save(Member member) {
-        member.setId(++sequence);
+    public Member save(String name, Address address) {
+        Member member = new Member(++sequence, name, address);
         store.put(member.getId(), member);
         return member;
     }

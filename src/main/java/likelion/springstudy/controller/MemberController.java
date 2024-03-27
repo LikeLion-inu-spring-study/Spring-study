@@ -26,15 +26,14 @@ public class MemberController {
     @PostMapping("/members/new")
     public String join(MemberForm memberForm) {
         Address address = new Address(memberForm.getCity(), memberForm.getStreet(), memberForm.getZipcode());
-        Member member = new Member(memberForm.getName(), address);
-        memberService.join(member);
+
+        memberService.join(memberForm.getName(), address);
 
         return "redirect:/";
     }
 
     @GetMapping("/members")
     public String findAll(Model model) {
-
         List<Member> members = memberService.findMembers();
         model.addAttribute("members", members);
         return "members/memberList";
