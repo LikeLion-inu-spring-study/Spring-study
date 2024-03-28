@@ -7,7 +7,6 @@ import java.util.*;
 
 @Repository
 public class MemoryMemberRepository implements MemberRepository {
-
     private static Map<Long, Member> store = new HashMap<>();
     private static long sequence = 0L;
     @Override
@@ -16,7 +15,6 @@ public class MemoryMemberRepository implements MemberRepository {
         store.put(member.getId() , member);
         return member;
     }
-
     @Override
     public Optional<Member> findById(Long id) {
         return Optional.ofNullable(store.get(id));
@@ -28,7 +26,6 @@ public class MemoryMemberRepository implements MemberRepository {
                 .filter(member -> member.getName().equals(name))
                 .findAny();
     }
-
     @Override
     public List<Member> findAll() {
         return new ArrayList<>(store.values());
