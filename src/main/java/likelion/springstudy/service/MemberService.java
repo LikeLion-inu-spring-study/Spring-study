@@ -4,11 +4,13 @@ import likelion.springstudy.domain.Member;
 import likelion.springstudy.repository.MemberRepository;
 import likelion.springstudy.repository.MemoryMemberRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
     public MemberService(MemberRepository memberRepository) {
@@ -16,9 +18,16 @@ public class MemberService {
     }
 
     public Long join(Member member) {
-        validateDuplicateMember(member);
-        memberRepository.save(member);
-        return member.getId();
+        long start = System.currentTimeMillis();
+
+        try {
+            validateDuplicateMember(member); //중복 회원 검증 memberRepository.save(member);
+            return member.getId();
+        } finally {
+            long finish = System.currentTimeMillis();
+            long timeMs = finish - start;
+            System.out.println("join " + timeMs + "ms");
+        }
     }
     private void validateDuplicateMember(Member member) {
         memberRepository.findByName(member.getName())
@@ -27,7 +36,14 @@ public class MemberService {
                 }); }
 
     public List<Member> findMembers() {
-        return memberRepository.findAll();
+        long start = System.currentTimeMillis();
+        try {
+            return memberRepository.findAll();
+        } finally {
+            long finish = System.currentTimeMillis();
+            long timeMs = finish - start;
+            System.out.println("findMembers " + timeMs + "ms");
+        }
     }
     public Optional<Member> findOne(Long memberId) {
         return memberRepository.findById(memberId);
