@@ -33,6 +33,9 @@ public class MemberController {
     public String create(MemberForm form) {
         Member member = new Member();
         member.setName(form.getName());
+        member.setCity(form.getCity());
+        member.setStreet(form.getStreet());
+        member.setZipcode(form.getZipcode());
 
         memberService.join(member);
 
